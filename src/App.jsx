@@ -292,53 +292,19 @@ useEffect(() => {
     oscillator.stop(startAt + duration + 0.03);
   };
 
-const startBackgroundMusic = () => {
+  const startBackgroundMusic = () => {
   if (!soundOn) return;
   if (bgIntervalRef.current) return;
 
-  const playLayer = () => {
-    // base pad (long soothing)
-    playTone(196, 6, "sine", 0.012, 0);
-    playTone(220, 6, "sine", 0.01, 0.5);
-
-    // mid layer
-    playTone(247, 4, "triangle", 0.01, 1.2);
-    playTone(294, 4, "triangle", 0.009, 2.4);
-
-    // high ambient sparkle
-    playTone(392, 2.5, "sine", 0.006, 3.2);
-    playTone(440, 2.5, "sine", 0.006, 4.1);
+  const playLoop = () => {
+    playTone(196, 0.9, "sine", 0.025, 0);
+    playTone(247, 1.0, "triangle", 0.02, 0.18);
+    playTone(294, 0.95, "sine", 0.018, 0.4);
+    playTone(392, 1.1, "triangle", 0.016, 0.62);
   };
 
-  const playSequence = () => {
-    playLayer();
-
-    setTimeout(() => {
-      playLayer();
-    }, 6000);
-
-    setTimeout(() => {
-      playLayer();
-    }, 12000);
-
-    setTimeout(() => {
-      playLayer();
-    }, 18000);
-
-    setTimeout(() => {
-      playLayer();
-    }, 24000);
-
-    setTimeout(() => {
-      playLayer();
-    }, 30000);
-  };
-
-  // initial play
-  playSequence();
-
-  // repeat after ~36 seconds (feels like long track)
-  bgIntervalRef.current = setInterval(playSequence, 36000);
+  playLoop();
+  bgIntervalRef.current = setInterval(playLoop, 1800);
 };
 
   const stopBackgroundMusic = () => {
